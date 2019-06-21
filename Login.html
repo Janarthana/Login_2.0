@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<head>
+    <div align="center" style="font-family:arial; color:#9096a0">
+        <h1>MY PAGE!
+            <h1>
+                <h3>
+                    <font color="black" />A new adventure awaits...! Pick your journey.</h3>
+    </div>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/2356059/pexels-photo-2356059.jpeg");
+            background-size: 1580px 720px;
+        }
+        
+        input {
+            opacity: 0.5;
+        }
+    </style>
+
+</head>
+
+<body onload="loading()" id="bodydiv">
+    <div align="center" style="margin:0 auto;" id="maindiv">
+        <form name="janaform">
+            <br/><br/>
+            <input type="text" id="username" placeholder="username">
+            <br/>
+            <input type="password" id="password" placeholder="password">
+            <br/><br/>
+            <input type="button" value="submit" onclick="javascript:verify()" />
+            <br/><br/>
+            <input type="checkbox" name="remember" id="remember" class="custom" checked="true" />
+            <label for="remember" style="font-family:arial">Remember Me</label>
+        </form>
+    </div>
+    <script type="text/javascript">
+        function verify() {
+            if (document.getElementById("username").value == "") {
+                alert("username is mandatory");
+            } else if (document.getElementById("password").value == "") {
+                alert("password is mandatory");
+            } else if (document.getElementById("username").value != "" && document.getElementById("password").value != "") {
+                if (document.getElementById("username").value == "admin" && document.getElementById("password").value == "12345") {
+                    alert("success");
+                    if (document.getElementById("remember").checked = true) {
+                        remember();
+                    }
+                    loadHistory();
+                    //location.href="https://www.dailymail.co.uk/sport/teampages/chelsea.html/";
+                } else {
+                    alert("re-check username or password");
+                }
+            }
+        }
+
+        function loadHistory() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("maindiv").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "chelsea.txt", true);
+            xhttp.send();
+            document.getElementById('bodydiv').style.backgroundImage = "url(https://wallpapercave.com/wp/wp1897072.jpg)";
+        }
+
+        function loading() {
+            alert("loading function called");
+            var allcookies = document.cookie;
+            alert("All Cookies:" + allcookies);
+            //var cookiearray = new Array();
+            var theCookies = allcookies.split(';');
+            alert(theCookies.length);
+            var uname, pvalue, name1, value1, name2, value2;
+            for (var i = 0; i < theCookies.length; i++) {
+                uname = theCookies[i].split('.')[0];
+                pvalue = theCookies[i].split('.')[1];
+                //alert("Key is:"+ name);
+                alert("Key is : " + uname + " and Value is : " + pvalue);
+                //alert("uname length:" + uname.length + "pvalue length:" + pvalue.length);
+
+                name1 = uname.split('=')[0];
+                value1 = uname.split('=')[1];
+                alert("Key1 " + name1 + " value1 : " + value1);
+
+                document.getElementById("username").value = value1;
+                name2 = pvalue.split('=')[0];
+                value2 = pvalue.split('=')[1];
+                //alert("Key is:"+ name);
+                alert("Key2 " + name2 + " value2 : " + value2);
+                document.getElementById("password").value = value2;
+
+
+            }
+        }
+
+
+        function remember() {
+            alert("remember function called");
+            var d = new Date();
+            //alert("month:" + d.getMonth());
+            d.setYear(d.getYear() + 1);
+            var ucookievalue, pcookievalue, cookiestring;
+            ucookievalue = "username=" + escape(document.janaform.username.value) + ".";
+            pcookievalue = "password=" + escape(document.janaform.password.value) + ";";
+            cookiestring = ucookievalue + pcookievalue + "expiers=" + d.toString() + ";";
+            alert("cookie to be stored---|> " + cookiestring);
+            document.cookie = cookiestring;
+            //document.cookie = "username=" + ucookievalue; 
+            //document.cookie = "password=" + pcookievalue; 
+            //document.cookie = "expires=" + d.toString() + ";";
+            //alert ("Setting Cookies : " + "username=" + ucookievalue +  "password=" + pcookievalue + "expires=" + d.toString());
+            /* var allcookies = document.cookie;
+             alert("allcookies:" + allcookies);
+             var theCookies = allcookies.split(';');
+             alert(theCookies.length);
+             //var aString = '';
+             var name, value;
+             for (var i = 0; i < theCookies.length; i++) {
+                 name = theCookies[i].split('=')[0];
+                 value = theCookies[i].split('=')[1];
+                 //alert("Key is:"+ name);
+                 alert("Key is : " + name + " and Value is : " + value);
+             }*/
+
+
+        }
+    </script>
+</body>
+
+</html>
